@@ -226,15 +226,15 @@ GameOverState.prototype.draw = function(game, dt, ctx) {
     //  Clear the background.
     ctx.clearRect(0, 0, game.width, game.height);
 
-    ctx.font="30px Arial";
+    ctx.font="45px Arial";
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline="center"; 
     ctx.textAlign="center"; 
     ctx.fillText("Game Over!", game.width / 2, game.height/2 - 40); 
-    ctx.font="16px Arial";
-    ctx.fillText("You scored " + game.score + " and got to level " + game.level, game.width / 2, game.height/2);
-    ctx.font="16px Arial";
-    ctx.fillText("Press 'Space' to play again.", game.width / 2, game.height/2 + 40);   
+    ctx.font="35px Arial";
+    ctx.fillText("You scored " + game.score + " and got to level " + game.level, game.width / 2, game.height/2+25);
+    ctx.font="35px Arial";
+    ctx.fillText("Press 'Space' to play again.", game.width / 2, game.height/2 + 200);   
 };
 
 GameOverState.prototype.keyDown = function(game, keyCode) {
@@ -488,6 +488,9 @@ PlayState.prototype.update = function(game, dt) {
     }
 };
 
+var img = document.createElement('img');
+img.src = "images/ship.PNG";
+
 PlayState.prototype.draw = function(game, dt, ctx) {
 
     //  Clear the background.
@@ -495,7 +498,9 @@ PlayState.prototype.draw = function(game, dt, ctx) {
     
     //  Draw ship.
     ctx.fillStyle = '#AFDBBD';
-    ctx.fillRect(this.ship.x - (this.ship.width / 2), this.ship.y - (this.ship.height / 2), this.ship.width, this.ship.height);
+    
+    ctx.drawImage(img, this.ship.x - (this.ship.width / 2), this.ship.y - (this.ship.height / 2), this.ship.width, this.ship.height);
+    //ctx.fillRect(this.ship.x - (this.ship.width / 2), this.ship.y - (this.ship.height / 2), this.ship.width, this.ship.height);
 
     //  Draw invaders.
     ctx.fillStyle = '#00DDFF';
@@ -654,7 +659,7 @@ function Ship(x, y) {
     this.x = x;
     this.y = y;
     this.width = 20;
-    this.height = 16;
+    this.height = 20;
 }
 
 /*
