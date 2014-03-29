@@ -488,8 +488,12 @@ PlayState.prototype.update = function(game, dt) {
     }
 };
 
-var img = document.createElement('img');
-img.src = "images/ship.PNG";
+var img_ship = document.createElement('img');
+img_ship.src = "images/ship.PNG";
+var img_alien = document.createElement('img');
+img_alien.src = "images/alien.PNG";
+
+
 
 PlayState.prototype.draw = function(game, dt, ctx) {
 
@@ -499,14 +503,15 @@ PlayState.prototype.draw = function(game, dt, ctx) {
     //  Draw ship.
     ctx.fillStyle = '#AFDBBD';
     
-    ctx.drawImage(img, this.ship.x - (this.ship.width / 2), this.ship.y - (this.ship.height / 2), this.ship.width, this.ship.height);
+    ctx.drawImage(img_ship, this.ship.x - (this.ship.width / 2), this.ship.y - (this.ship.height / 2), this.ship.width, this.ship.height);
     //ctx.fillRect(this.ship.x - (this.ship.width / 2), this.ship.y - (this.ship.height / 2), this.ship.width, this.ship.height);
 
     //  Draw invaders.
     ctx.fillStyle = '#00DDFF';
     for(var i=0; i<this.invaders.length; i++) {
         var invader = this.invaders[i];
-        ctx.fillRect(invader.x - invader.width/2, invader.y - invader.height/2, invader.width, invader.height);
+        ctx.drawImage(img_alien, invader.x - invader.width/2, invader.y - invader.height/2, invader.width, invader.height);
+        //ctx.fillRect(invader.x - invader.width/2, invader.y - invader.height/2, invader.width, invader.height);
     }
 
     //  Draw bombs.
