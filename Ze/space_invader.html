@@ -14,7 +14,7 @@
 
   <canvas id="canvas"></canvas>
  
-  <script src="//js.leapmotion.com/0.2.0/leap.min.js"></script>
+  <script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>
 
   <script>
 	  
@@ -34,15 +34,71 @@
     var height = canvas.height;
 
     var controller = new Leap.Controller();
+
+    /*
+      The leapToScene function takes a position in leap space 
+      and converts it to the space in the canvas.
+    */
+    function leapToScene( frame , leapPos ){
+
+      // Gets the interaction box of the current frame
+      var iBox = frame.interactionBox;
+
+      // Gets the left border and top border of the box
+      // In order to convert the position to the proper
+      // location for the canvas
+      var left = iBox.center[0] - iBox.size[0]/2;
+      var top = iBox.center[1] + iBox.size[1]/2;
+
+      // Takes our leap coordinates, and changes them so
+      // that the origin is in the top left corner 
+      var x = leapPos[0] - left;
+      var y = leapPos[1] - top;
+
+      // Divides the position by the size of the box
+      // so that x and y values will range from 0 to 1
+      // as they lay within the interaction box
+      x /= iBox.size[0];
+      y /= iBox.size[1];
+
+      // Uses the height and width of the canvas to scale
+      // the x and y coordinates in a way that they 
+      // take up the entire canvas
+      x *= width;
+      y *= height;
+
+      // Returns the values, making sure to negate the sign 
+      // of the y coordinate, because the y basis in canvas 
+      // points down instead of up
+      return [ x , -y ];
+
+    }
    
     controller.on( 'frame' , function(frame){
 
       // Clears the canvas so frames don't build on each other.
       c.clearRect(0, 0, width, height);
 
-      // Gets the number of fingers in each frame
-      var numberOfFingers = frame.fingers.length;
+      // We only look at one hand
+      var hand = frame.hands[0];
 
+      // and get its position, so that it can be passed through
+      // for drawing the connections
+      var handPos = leapToScene( frame , hand.palmPosition );
+
+      // Setting up the style for the fill
+      c.fillStyle = "#FF5A40";
+
+      // Creating the path for the hand circle
+      c.beginPath();
+
+      // Draw a full circle of radius 10 at the hand position
+      c.arc(handPos[0], handPos[1], 40, 0, Math.PI*2);
+
+      c.closePath();
+      c.fill();
+
+/*
       // Defines the font shape and size
       c.font = "400px Arial";
 
@@ -53,7 +109,7 @@
       // Tells Canvas to draw the The number of fingers,
       // at the center of the canvas
       c.fillText( numberOfFingers , width/2 , height/2 );
-    
+*/  
     
     });
 	 
