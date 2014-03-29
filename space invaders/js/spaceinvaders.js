@@ -193,14 +193,14 @@ WelcomeState.prototype.draw = function(game, dt, ctx) {
     //  Clear the background.
     ctx.clearRect(0, 0, game.width, game.height);
 
-    ctx.font="30px Arial";
+    ctx.font="68px Arial";
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline="center"; 
     ctx.textAlign="center"; 
     ctx.fillText("Space Invaders", game.width / 2, game.height/2 - 40); 
-    ctx.font="16px Arial";
+    ctx.font="48px Arial";
 
-    ctx.fillText("Press 'Space' to start.", game.width / 2, game.height/2); 
+    ctx.fillText("Press 'Space' to start.", game.width / 2, game.height/1.5); 
 };
 
 WelcomeState.prototype.keyDown = function(game, keyCode) {
@@ -307,12 +307,16 @@ PlayState.prototype.update = function(game, dt) {
     //  the ship. Check this on ticks rather than via a keydown
     //  event for smooth movement, otherwise the ship would move
     //  more like a text editor caret.
-    if(x_position <0 ) {
+    if(x_position < width/2 && x_position != null) {
         this.ship.x -= this.shipSpeed * dt;
     }
-    if(x_position > 0) {
+    else if (x_position > width/2 && x_position != null) {
         this.ship.x += this.shipSpeed * dt;
     }
+    else {
+        this.ship.x = this.ship.x;
+    }
+
     if(true) {
         this.fireRocket();
     }
@@ -490,33 +494,33 @@ PlayState.prototype.draw = function(game, dt, ctx) {
     ctx.clearRect(0, 0, game.width, game.height);
     
     //  Draw ship.
-    ctx.fillStyle = '#999999';
+    ctx.fillStyle = '#AFDBBD';
     ctx.fillRect(this.ship.x - (this.ship.width / 2), this.ship.y - (this.ship.height / 2), this.ship.width, this.ship.height);
 
     //  Draw invaders.
-    ctx.fillStyle = '#006600';
+    ctx.fillStyle = '#00DDFF';
     for(var i=0; i<this.invaders.length; i++) {
         var invader = this.invaders[i];
         ctx.fillRect(invader.x - invader.width/2, invader.y - invader.height/2, invader.width, invader.height);
     }
 
     //  Draw bombs.
-    ctx.fillStyle = '#ff5555';
+    ctx.fillStyle = '#ED3309';
     for(var i=0; i<this.bombs.length; i++) {
         var bomb = this.bombs[i];
-        ctx.fillRect(bomb.x - 2, bomb.y - 2, 4, 4);
+        ctx.fillRect(bomb.x - 2, bomb.y - 2, 6, 6);
     }
 
     //  Draw rockets.
     ctx.fillStyle = '#ff0000';
     for(var i=0; i<this.rockets.length; i++) {
         var rocket = this.rockets[i];
-        ctx.fillRect(rocket.x, rocket.y - 2, 1, 4);
+        ctx.fillRect(rocket.x, rocket.y - 2, 3, 6);
     }
 
     //  Draw info.
     var textYpos = game.gameBounds.bottom + ((game.height - game.gameBounds.bottom) / 2) + 14/2;
-    ctx.font="14px Arial";
+    ctx.font="36px Arial";
     ctx.fillStyle = '#ffffff';
     var info = "Lives: " + game.lives;
     ctx.textAlign = "left";
@@ -628,13 +632,13 @@ LevelIntroState.prototype.draw = function(game, dt, ctx) {
     //  Clear the background.
     ctx.clearRect(0, 0, game.width, game.height);
 
-    ctx.font="36px Arial";
+    ctx.font="54px Arial";
     ctx.fillStyle = '#ffffff';
     ctx.textBaseline="middle"; 
     ctx.textAlign="center"; 
     ctx.fillText("Level " + this.level, game.width / 2, game.height/2);
-    ctx.font="24px Arial";
-    ctx.fillText("Ready in " + this.countdownMessage, game.width / 2, game.height/2 + 36);      
+    ctx.font="42px Arial";
+    ctx.fillText("Ready in " + this.countdownMessage, game.width / 2, game.height/2+250);      
     return;
 };
 
