@@ -1,38 +1,3 @@
-<html>
-<head>
-  <style>
-	
-	  #canvas{
-		  width:	100%;
-		  height:	100%;
-	  }
-	  
-  </style>
-	
-</head>
-<body>
-
-  <canvas id="canvas"></canvas>
- 
-  <script src="http://js.leapmotion.com/0.2.0/leap.min.js"></script>
-
-  <script>
-	  
- 	// Get the canvas DOM element 
-    var canvas = document.getElementById('canvas');
-
-    // Making sure we have the proper aspect ratio for our canvas
-    canvas.width = canvas.clientWidth;
-    canvas.height = canvas.clientHeight;
-
-    // Create the context we will use for drawing
-    var c =  canvas.getContext('2d');
-
-    // Save the canvas width and canvas height
-    // as easily accesible variables
-    var width = canvas.width;
-    var height = canvas.height;
-
     var controller = new Leap.Controller();
 
     /*
@@ -73,13 +38,10 @@
       return [ x , -y ];
 
     }
-    
-    var x_position;
 
+    var x_position = 0;
+   
     controller.on( 'frame' , function(frame){
-
-      // Clears the canvas so frames don't build on each other.
-      c.clearRect(0, 0, width, height);
 
       // We only look at one hand
       var hand = frame.hands[0];
@@ -88,29 +50,9 @@
       // for drawing the connections
       var handPos = leapToScene( frame , hand.palmPosition );
 
-      x_position = handPos [0];
+      x_position = handPos[0];
       console.log (x_position);
-
-      // Setting up the style for the fill
-      c.fillStyle = "#FF5A40";
-
-      // Creating the path for the hand circle
-      c.beginPath();
-
-      // Draw a full circle of radius 10 at the hand position
-      c.arc(handPos[0], handPos[1], 40, 0, Math.PI*2);
-
-      c.closePath();
-      c.fill();
-
     
     });
 	 
 	controller.connect();
-
-
-		
-  </script>
-	  
-</body>
-</html>

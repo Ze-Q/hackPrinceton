@@ -1,26 +1,3 @@
-/*
-  spaceinvaders.js
-
-  the core logic for the space invaders game.
-
-*/
-
-/*  
-    Game Class
-
-    The Game class represents a Space Invaders game.
-    Create an instance of it, change any of the default values
-    in the settings, and call 'start' to run the game.
-
-    Call 'initialise' before 'start' to set the canvas the game
-    will draw to.
-
-    Call 'moveShip' or 'shipFire' to control the ship.
-
-    Listen for 'gameWon' or 'gameLost' events to handle the game
-    ending.
-*/
-
 //  Creates an instance of the Game class.
 function Game() {
 
@@ -34,8 +11,8 @@ function Game() {
         invaderDropDistance: 20,
         rocketVelocity: 120,
         rocketMaxFireRate: 2,
-        gameWidth: 400,
-        gameHeight: 300,
+        gameWidth: 750,
+        gameHeight: 500,
         fps: 50,
         debugMode: false,
         invaderRanks: 5,
@@ -123,19 +100,6 @@ Game.prototype.currentState = function() {
     return this.stateStack.length > 0 ? this.stateStack[this.stateStack.length - 1] : null;
 };
 
-//  Mutes or unmutes the game.
-Game.prototype.mute = function(mute) {
-
-    //  If we've been told to mute, mute.
-    if(mute === true) {
-        this.sounds.mute = true;
-    } else if (mute === false) {
-        this.sounds.mute = false;
-    } else {
-        // Toggle mute instead...
-        this.sounds.mute = this.sounds.mute ? false : true;
-    }
-};
 
 //  The main loop.
 function GameLoop(game) {
@@ -343,13 +307,13 @@ PlayState.prototype.update = function(game, dt) {
     //  the ship. Check this on ticks rather than via a keydown
     //  event for smooth movement, otherwise the ship would move
     //  more like a text editor caret.
-    if(game.pressedKeys[37]) {
+    if(x_position <0 ) {
         this.ship.x -= this.shipSpeed * dt;
     }
-    if(game.pressedKeys[39]) {
+    if(x_position > 0) {
         this.ship.x += this.shipSpeed * dt;
     }
-    if(game.pressedKeys[32]) {
+    if(true) {
         this.fireRocket();
     }
 
